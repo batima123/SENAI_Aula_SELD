@@ -1,0 +1,83 @@
+/* ==========================
+   PINAGEM MOTOR A - L298N
+   ========================== */
+
+int IN1 = 5;
+int IN2 = 6;
+int velocidadeA = 10;
+int b1 = 2;
+int b2 = 3;
+int b3 = 4;
+
+// Variável auxiliar PWM
+int velocidade = 0;
+
+
+/* ==========================
+   CONFIGURAÇÃO INICIAL
+   ========================== */
+void setup() {
+
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(velocidadeA, OUTPUT);
+  
+
+  pinMode(b1, INPUT_PULLUP);
+  pinMode(b2, INPUT_PULLUP);
+  pinMode(b3, INPUT_PULLUP);
+
+}
+
+
+/* ==========================
+   LOOP PRINCIPAL
+   ========================== */
+void loop() {
+
+  int estadodobotao1 = digitalRead(b1);
+  int estadodobotao2 = digitalRead(b2);
+  int estadodobotao3 = digitalRead(b3);
+   velocidade = 200; // ajuste 0 a 255
+
+  /* ==========================
+     BOTÃO 1 - SENTIDO HORÁRIO
+     ========================== */
+  if (estadodobotao1 == LOW) {
+
+    
+    analogWrite(velocidadeA, velocidade);
+    digitalWrite(IN1, HIGH);
+    digitalWrite(IN2, LOW);
+  }
+
+
+  /* ==========================
+     BOTÃO 3 - SENTIDO ANTI-HORÁRIO
+     ========================== */
+  else if (estadodobotao2 == LOW) {
+
+    
+    analogWrite(velocidadeA, velocidade);
+
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, HIGH);
+  }
+
+
+  /* ==========================
+     BOTÃO 2 - PARAR
+     ========================== */
+  else if (estadodobotao3 == LOW) {
+
+        analogWrite(velocidadeA, 0);
+
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, LOW);
+  }
+
+
+  /* ==========================
+     NENHUM BOTÃO PRESSIONADO
+     ========================== */
+}
